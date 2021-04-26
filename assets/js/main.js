@@ -211,9 +211,6 @@
           this.datalength = this.quizdata[this.selectedCategory].length - 1;
         }
       },
-
-      // computed properties
-      // http://vuejs.org/guide/computed.html
       computed: {
         types() {
           return Object.keys(this.quizdata);
@@ -225,8 +222,6 @@
         this.datalength = this.quizdata[this.selectedCategory].length - 1;
         document.querySelectorAll('.menu-item')[0].classList.add('active');
       },
-      // methods that implement data logic.
-      // note there's no DOM manipulation here at all.
       methods: {
         activemenu : function(eve,cat){
           document.querySelector('.menu-list').querySelectorAll('.menu-item').forEach(function(ele,key){
@@ -234,7 +229,7 @@
           });
           eve.target.classList.add("active");
           this.selectedCategory = cat;
-          this.index = 0;
+          this.resetQuiz();
         },
         nextslide : function(){
           if(this.selectedAnswer == ''){
@@ -268,14 +263,5 @@
           this.wrongAnswer = 0
       }
       },
-
-      // a custom directive to wait for the DOM to be updated
-      // before focusing on the input field.
-      // http://vuejs.org/guide/custom-directive.html
-      directives: {
-      }
     });
-    // window.addEventListener("hashchange", onHashChange);
-
-    // mount
     app.mount(".quizapp");

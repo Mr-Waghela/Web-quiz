@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Quiz</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+  </head>
+  <body>
+    <section class="quizapp">
+      <div class="container">
+        <div class="quiz-wrap">
+          <header>
+            <h1 class="page-title">Simple Quiz</h1>
+            <div class="heading-wrap">
+              <div class="heading">category : {{selectedCategory}}</div>
+              <div class="q-count" v-if="datalength - index != -1">Questions remaining : <span class="bold">{{datalength - index}}</span></div>
+              <div class="q-count" v-else>Results</div>
+            </div>
+            <ul class="menu-list">
+              <li v-for="type,key in types" :value="key" class="cursor menu-item" @click="activemenu($event,type)"/>{{type}}</li>
+            </ul>
+          </header>
+          <div class="inner-container" v-if="datalength - index != -1">
+            <div class="question-wrap">
+              <h2 class="question-text bold">{{quizdata[selectedCategory][index].question}}</h2>
+                <ul class="transition">
+                  <li v-for="(option, key) in quizdata[selectedCategory][index].options">
+                    <div :value="option" class="option-list" :class="{'wrg-anw' : selectedAnswer == option},{'crrt-anw' : option == quizdata[selectedCategory][index].answer && selectedAnswer != ''},{'selected' : selectedAnswer != ''}"
+                    >
+                      <input type="radio" name="answer" 
+                      :id="index" 
+                      :value="option"  
+                      @change="answered($event)"
+                      v-model="selectedAnswer" 
+                      :disabled="selectedAnswer != ''"  
+                      />
+                      <label :for="selectedCategory" :value="option">{{option}}</label>
+                      <div class="check"></div>
+                    </div>
+                  </li>
+                </ul>
+            </div>
+            <div class="btn-wrap">
+              <!-- <div class="btn prev" v-if="index > 0" @click="prevslide" :class="{disable : disable}">Previous</div> -->
+              <div class="btn" v-if="datalength - index != -1" :class="{disable : isDisabled}" @click="nextslide">Next</div>
+            </div>
+            <!-- <ul class="status">
+              <li class="pallets" v-for="ind in datalength" :class="'on' : palleton"></li>
+            </ul> -->
+          </div>
+          <div class="inner-container" v-else>
+            <div class="result-page">
+              <p class="final-result">
+                  Correct Answers:
+                  <span class="right-answer">{{ correctAnswer }}</span
+                  >
+              </p>
+              <p class="final-result">
+                  Wrong Answers:
+                  <span class="wrong-answer">{{ wrongAnswer }}</span
+                  >
+              </p>
+            </div>
+            <div class="">
+              <div
+                  class="btn resetbtn"
+                  @click="resetQuiz"
+              >
+                  Play again
+              </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="https://unpkg.com/vue@3.0.2"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
